@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
-	"github.com/saiprasadkrishnamurthy/reference-data-api/models"
+	"github.com/saiprasadkrishnamurthy/interviews-api/models"
 )
 
 // BaseController This is our Base Controller
