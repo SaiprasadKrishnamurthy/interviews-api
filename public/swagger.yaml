@@ -1,0 +1,123 @@
+basePath: /api/v1
+definitions:
+  models.Question:
+    properties:
+      answerTimeInSeconds:
+        type: integer
+      questionId:
+        type: string
+      questionName:
+        type: string
+      questionText:
+        type: string
+      sequence:
+        type: integer
+      sessionId:
+        type: string
+    type: object
+  models.Questions:
+    properties:
+      questions:
+        items:
+          $ref: '#/definitions/models.Question'
+        type: array
+    type: object
+  models.Session:
+    properties:
+      description:
+        type: string
+      instructions:
+        items:
+          type: string
+        type: array
+      name:
+        type: string
+      sessionId:
+        type: string
+      totalTimeInSeconds:
+        type: integer
+    type: object
+host: localhost:8083
+info:
+  contact:
+    email: support@swagger.io
+    name: Sai Kris
+    url: http://www.swagger.io/support
+  description: Interviews API  Golang to simplify the interview process.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Interviews API written in Golang
+  version: "1.0"
+paths:
+  /question/{questionName}/{questionId}:
+    get:
+      description: Get Question video by question id.
+      parameters:
+      - description: question id
+        in: query
+        name: questionId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          headers:
+            Token:
+              description: qwerty
+              type: string
+        "400": {}
+        "404": {}
+        "500": {}
+      summary: Get Question video by question id.
+  /questions:
+    get:
+      description: Get Questions by session id.
+      parameters:
+      - description: Session id
+        in: query
+        name: sessionId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              description: qwerty
+              type: string
+          schema:
+            $ref: '#/definitions/models.Questions'
+        "400": {}
+        "404": {}
+        "500": {}
+      summary: Get Questions by session id.
+  /session/{sessionId}:
+    get:
+      description: Get Session by session id.
+      parameters:
+      - description: Session id
+        in: path
+        name: sessionId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              description: qwerty
+              type: string
+          schema:
+            $ref: '#/definitions/models.Session'
+        "400": {}
+        "404": {}
+        "500": {}
+      summary: Get Session by session id.
+swagger: "2.0"

@@ -1,0 +1,182 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Interviews API  Golang to simplify the interview process.",
+        "title": "Interviews API written in Golang",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "Sai Kris",
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8083",
+    "basePath": "/api/v1",
+    "paths": {
+        "/question/{questionName}/{questionId}": {
+            "get": {
+                "description": "Get Question video by question id.",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get Question video by question id.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "question id",
+                        "name": "questionId",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "headers": {
+                            "Token": {
+                                "type": "string",
+                                "description": "qwerty"
+                            }
+                        }
+                    },
+                    "400": {},
+                    "404": {},
+                    "500": {}
+                }
+            }
+        },
+        "/questions": {
+            "get": {
+                "description": "Get Questions by session id.",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get Questions by session id.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Session id",
+                        "name": "sessionId",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Questions"
+                        },
+                        "headers": {
+                            "Token": {
+                                "type": "string",
+                                "description": "qwerty"
+                            }
+                        }
+                    },
+                    "400": {},
+                    "404": {},
+                    "500": {}
+                }
+            }
+        },
+        "/session/{sessionId}": {
+            "get": {
+                "description": "Get Session by session id.",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get Session by session id.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Session id",
+                        "name": "sessionId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Session"
+                        },
+                        "headers": {
+                            "Token": {
+                                "type": "string",
+                                "description": "qwerty"
+                            }
+                        }
+                    },
+                    "400": {},
+                    "404": {},
+                    "500": {}
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Question": {
+            "type": "object",
+            "properties": {
+                "answerTimeInSeconds": {
+                    "type": "integer"
+                },
+                "questionId": {
+                    "type": "string"
+                },
+                "questionName": {
+                    "type": "string"
+                },
+                "questionText": {
+                    "type": "string"
+                },
+                "sequence": {
+                    "type": "integer"
+                },
+                "sessionId": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Questions": {
+            "type": "object",
+            "properties": {
+                "questions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Question"
+                    }
+                }
+            }
+        },
+        "models.Session": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "instructions": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "sessionId": {
+                    "type": "string"
+                },
+                "totalTimeInSeconds": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}
