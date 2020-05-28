@@ -18,7 +18,7 @@ type QuestionsController struct {
 }
 
 // Questions from database.
-// Questions.
+// Questions from db.
 // @Summary Get Questions by session id.
 // @Description Get Questions by session id.
 // @Produce  json
