@@ -31,3 +31,38 @@ PUT _template/questions_metadata_index_template
     }
   }
 }
+
+
+PUT _template/sessions_index_template
+{
+  "index_patterns": [
+    "*sessions"
+  ],
+  "settings": {
+    "number_of_shards": 5
+  },
+  "mappings": {
+    "_doc": {
+      "dynamic_templates": [
+        {
+          "strings": {
+            "match_mapping_type": "string",
+            "unmatch": "*Id",
+            "mapping": {
+              "type": "text"
+            }
+          }
+        },
+        {
+          "text": {
+            "match_mapping_type": "string",
+            "match": "*Id",
+            "mapping": {
+              "type": "keyword"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

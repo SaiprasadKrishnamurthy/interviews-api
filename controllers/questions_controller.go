@@ -42,13 +42,13 @@ func (c *QuestionsController) Questions(rw http.ResponseWriter, r *http.Request,
 // @Summary Get Question video by question id.
 // @Description Get Question video by question id.
 // @Produce  json
-// @Param questionId query string true "question id"
+// @Param questionId path string true "question id"
 // @Success 200
 // @Header 200 {string} Token "qwerty"
 // @Failure 400
 // @Failure 404
 // @Failure 500
-// @Router /question/{questionName}/{questionId} [get]
+// @Router /question/{questionId} [get]
 func (c *QuestionsController) QuestionVideo(rw http.ResponseWriter, r *http.Request, p httprouter.Params) error {
 	questionID := p.ByName("questionId")
 
@@ -71,7 +71,7 @@ func (c *QuestionsController) QuestionVideo(rw http.ResponseWriter, r *http.Requ
 // @Failure 400
 // @Failure 404
 // @Failure 500
-// @Router /question [post]
+// @Router /question [put]
 func (c *QuestionsController) SaveQuestionMetadata(rw http.ResponseWriter, r *http.Request, p httprouter.Params) error {
 	go func() {
 		questionMetadata := models.QuestionMetadata{}

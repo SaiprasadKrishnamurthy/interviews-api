@@ -34,7 +34,7 @@ var doc = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/question": {
-            "post": {
+            "put": {
                 "description": "SaveQuestionMetadata saves question metadata.",
                 "consumes": [
                     "application/json"
@@ -62,7 +62,7 @@ var doc = `{
                 }
             }
         },
-        "/question/{questionName}/{questionId}": {
+        "/question/{questionId}": {
             "get": {
                 "description": "Get Question video by question id.",
                 "produces": [
@@ -74,7 +74,7 @@ var doc = `{
                         "type": "string",
                         "description": "question id",
                         "name": "questionId",
-                        "in": "query",
+                        "in": "path",
                         "required": true
                     }
                 ],
@@ -122,6 +122,35 @@ var doc = `{
                             }
                         }
                     },
+                    "400": {},
+                    "404": {},
+                    "500": {}
+                }
+            }
+        },
+        "/session": {
+            "put": {
+                "description": "creates an interview session.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "creates an interview session.",
+                "parameters": [
+                    {
+                        "description": "creates an interview session",
+                        "name": "account",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Session"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {},
                     "400": {},
                     "404": {},
                     "500": {}

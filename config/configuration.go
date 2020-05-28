@@ -14,6 +14,7 @@ type ElasticConfiguration struct {
 	Username               string
 	Password               string
 	QuestionsMetadataIndex string
+	SessionIndex           string
 }
 
 // ServerConfiguration  config object

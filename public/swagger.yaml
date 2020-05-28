@@ -71,7 +71,7 @@ info:
   version: "1.0"
 paths:
   /question:
-    post:
+    put:
       consumes:
       - application/json
       description: SaveQuestionMetadata saves question metadata.
@@ -90,12 +90,12 @@ paths:
         "404": {}
         "500": {}
       summary: SaveQuestionMetadata saves question metadata.
-  /question/{questionName}/{questionId}:
+  /question/{questionId}:
     get:
       description: Get Question video by question id.
       parameters:
       - description: question id
-        in: query
+        in: path
         name: questionId
         required: true
         type: string
@@ -135,6 +135,26 @@ paths:
         "404": {}
         "500": {}
       summary: Get Questions by session id.
+  /session:
+    put:
+      consumes:
+      - application/json
+      description: creates an interview session.
+      parameters:
+      - description: creates an interview session
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/models.Session'
+      produces:
+      - application/json
+      responses:
+        "202": {}
+        "400": {}
+        "404": {}
+        "500": {}
+      summary: creates an interview session.
   /session/{sessionId}:
     get:
       description: Get Session by session id.

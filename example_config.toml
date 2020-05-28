@@ -4,6 +4,7 @@ skipTLS=true
 username=""
 password=""
 questionsMetadataIndex=""
+sessionIndex=""
 
 [server]
 port=8083
