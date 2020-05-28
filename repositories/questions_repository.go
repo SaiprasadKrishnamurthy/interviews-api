@@ -22,3 +22,8 @@ func GetQuestions(sessionID string) models.Questions {
 	}
 	return models.Questions{Questions: questions}
 }
+
+// SaveQuestionMetadata get questions.
+func SaveQuestionMetadata(questionMetadata models.QuestionMetadata) error {
+
+}
