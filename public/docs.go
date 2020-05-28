@@ -33,6 +33,35 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/question": {
+            "post": {
+                "description": "SaveQuestionMetadata saves question metadata.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "SaveQuestionMetadata saves question metadata.",
+                "parameters": [
+                    {
+                        "description": "Add account",
+                        "name": "account",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.QuestionMetadata"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {},
+                    "400": {},
+                    "404": {},
+                    "500": {}
+                }
+            }
+        },
         "/question/{questionName}/{questionId}": {
             "get": {
                 "description": "Get Question video by question id.",
@@ -141,6 +170,35 @@ var doc = `{
             "properties": {
                 "answerTimeInSeconds": {
                     "type": "integer"
+                },
+                "questionId": {
+                    "type": "string"
+                },
+                "questionName": {
+                    "type": "string"
+                },
+                "questionText": {
+                    "type": "string"
+                },
+                "sequence": {
+                    "type": "integer"
+                },
+                "sessionId": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.QuestionMetadata": {
+            "type": "object",
+            "properties": {
+                "answerText": {
+                    "type": "string"
+                },
+                "answerTimeInSeconds": {
+                    "type": "integer"
+                },
+                "importantKeywords": {
+                    "type": "string"
                 },
                 "questionId": {
                     "type": "string"

@@ -9,15 +9,16 @@ type Configuration struct {
 
 // ElasticConfiguration elastic config object
 type ElasticConfiguration struct {
-	URI      string
-	SkipTLS  bool
-	Username string
-	Password string
+	URI                    string
+	SkipTLS                bool
+	Username               string
+	Password               string
+	QuestionsMetadataIndex string
 }
 
 // ServerConfiguration  config object
 type ServerConfiguration struct {
-	Port int
+	Port string
 }
 
 // VideoStoreConfiguration  config object

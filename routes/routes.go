@@ -36,6 +36,7 @@ func questionsController(apiContext string, r *httprouter.Router, baseController
 	c := &controllers.QuestionsController{BaseController: baseController}
 	r.GET(apiContext+"/questions", c.Action(c.Questions))
 	r.GET(apiContext+"/question/:questionId", c.Action(c.QuestionVideo))
+	r.POST(apiContext+"/question", c.Action(c.SaveQuestionMetadata))
 }
 
 func sessionController(apiContext string, r *httprouter.Router, baseController controllers.BaseController) {

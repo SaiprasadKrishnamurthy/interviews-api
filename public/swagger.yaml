@@ -15,6 +15,25 @@ definitions:
       sessionId:
         type: string
     type: object
+  models.QuestionMetadata:
+    properties:
+      answerText:
+        type: string
+      answerTimeInSeconds:
+        type: integer
+      importantKeywords:
+        type: string
+      questionId:
+        type: string
+      questionName:
+        type: string
+      questionText:
+        type: string
+      sequence:
+        type: integer
+      sessionId:
+        type: string
+    type: object
   models.Questions:
     properties:
       questions:
@@ -51,6 +70,26 @@ info:
   title: Interviews API written in Golang
   version: "1.0"
 paths:
+  /question:
+    post:
+      consumes:
+      - application/json
+      description: SaveQuestionMetadata saves question metadata.
+      parameters:
+      - description: Add account
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/models.QuestionMetadata'
+      produces:
+      - application/json
+      responses:
+        "202": {}
+        "400": {}
+        "404": {}
+        "500": {}
+      summary: SaveQuestionMetadata saves question metadata.
   /question/{questionName}/{questionId}:
     get:
       description: Get Question video by question id.

@@ -8,6 +8,7 @@ import (
 
 	"github.com/julienschmidt/httprouter"
 	"github.com/saiprasadkrishnamurthy/interviews-api/config"
+	"github.com/saiprasadkrishnamurthy/interviews-api/models"
 	"github.com/saiprasadkrishnamurthy/interviews-api/repositories"
 )
 
@@ -56,6 +57,29 @@ func (c *QuestionsController) QuestionVideo(rw http.ResponseWriter, r *http.Requ
 	fmt.Println(url)
 	rw.Write(downloadFile(url))
 	return nil // no error
+}
+
+// SaveQuestionMetadata saves question metadata.
+// SaveQuestionMetadata.
+// @Summary SaveQuestionMetadata saves question metadata.
+// @Description SaveQuestionMetadata saves question metadata.
+// @Produce  json
+// @Accept json
+// @Param account body models.QuestionMetadata true "Add account"
+// @Success 202
+// @Header 200 {string} Token "qwerty"
+// @Failure 400
+// @Failure 404
+// @Failure 500
+// @Router /question [post]
+func (c *QuestionsController) SaveQuestionMetadata(rw http.ResponseWriter, r *http.Request, p httprouter.Params) error {
+	go func() {
+		questionMetadata := models.QuestionMetadata{}
+		questionMetadata.FromJSON(r.Body)
+		repositories.SaveQuestionMetadata(&questionMetadata)
+	}()
+	rw.WriteHeader(http.StatusAccepted)
+	return nil // never fails cause it's async.
 }
 
 func downloadFile(url string) []byte {
