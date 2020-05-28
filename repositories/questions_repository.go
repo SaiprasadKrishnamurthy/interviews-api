@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/saiprasadkrishnamurthy/interviews-api/config"
 	"github.com/saiprasadkrishnamurthy/interviews-api/models"
@@ -14,21 +15,52 @@ import (
 
 // GetQuestions get questions.
 func GetQuestions(sessionID string) models.Questions {
-	questions := []models.Question{
-		models.Question{
-			SessionID:           sessionID,
-			Sequence:            1,
-			QuestionID:          "question1",
-			QuestionText:        "QuestionText1",
-			AnswerTimeInSeconds: 60,
+	client := config.ElasticClient()
+	configuration := config.GetConfig()
+	elasticConf := configuration.Elastic
+	uri := elasticConf.URI + elasticConf.QuestionsMetadataIndex + "/_search"
+	queryJSON := `{
+		"query": {
+		  "bool": {
+			"filter": [
+			  {
+				"term": {
+				  "sessionId": "%s"
+				}
+			  }
+			]
+		  }
 		},
-		models.Question{
-			SessionID:           sessionID,
-			Sequence:            2,
-			QuestionID:          "question2",
-			QuestionText:        "QuestionText2",
-			AnswerTimeInSeconds: 60,
-		},
+		"sort": [
+		  {
+			"sequence": {
+			  "order": "asc"
+			}
+		  }
+		]
+	  }`
+	query := fmt.Sprintf(queryJSON, sessionID)
+
+	req, err := http.NewRequest("POST", uri, strings.NewReader(query))
+	req.Header.Set("Content-Type", "application/json")
+	req.SetBasicAuth(configuration.Elastic.Username, configuration.Elastic.Password)
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	bodyText, err := ioutil.ReadAll(resp.Body)
+	var response map[string]interface{}
+	json.Unmarshal(bodyText, &response)
+	h := response["hits"].(map[string]interface{})
+	hits := h["hits"].([]interface{})
+	questions := []models.Question{}
+	for _, hit := range hits {
+		obj := hit.(map[string]interface{})
+		src := obj["_source"]
+		srcJSON, _ := json.Marshal(src)
+		qm := models.QuestionMetadata{}
+		json.Unmarshal(srcJSON, &qm)
+		questions = append(questions, qm.Question)
 	}
 	return models.Questions{Questions: questions}
 }
@@ -48,8 +80,9 @@ func SaveQuestionMetadata(questionMetadata *models.QuestionMetadata) error {
 	if err != nil {
 		log.Fatal(err)
 	}
-	bodyText, err := ioutil.ReadAll(resp.Body)
-	s := string(bodyText)
-	fmt.Println(s)
-	return err
+	_, e := ioutil.ReadAll(resp.Body)
+	if e != nil {
+		log.Println(e)
+	}
+	return e
 }
