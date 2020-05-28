@@ -66,7 +66,7 @@ func CreateSession(session *models.Session) error {
 	client := config.ElasticClient()
 	configuration := config.GetConfig()
 	elasticConf := configuration.Elastic
-	uri := elasticConf.URI + elasticConf.SessionIndex + "/_doc/" + session.SessionID
+	uri := elasticConf.URI + elasticConf.SessionIndex + "/_doc/" + (*session).SessionID
 	fmt.Println(uri)
 	json, _ := json.Marshal(session)
 	req, err := http.NewRequest("POST", uri, bytes.NewBuffer(json))

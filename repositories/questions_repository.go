@@ -70,7 +70,7 @@ func SaveQuestionMetadata(questionMetadata *models.QuestionMetadata) error {
 	client := config.ElasticClient()
 	configuration := config.GetConfig()
 	elasticConf := configuration.Elastic
-	uri := elasticConf.URI + elasticConf.QuestionsMetadataIndex + "/_doc/" + questionMetadata.QuestionID
+	uri := elasticConf.URI + elasticConf.QuestionsMetadataIndex + "/_doc/" + (*questionMetadata).QuestionID
 	fmt.Println(uri)
 	json, _ := json.Marshal(questionMetadata)
 	req, err := http.NewRequest("POST", uri, bytes.NewBuffer(json))
@@ -80,9 +80,10 @@ func SaveQuestionMetadata(questionMetadata *models.QuestionMetadata) error {
 	if err != nil {
 		log.Fatal(err)
 	}
-	_, e := ioutil.ReadAll(resp.Body)
+	r, e := ioutil.ReadAll(resp.Body)
+	fmt.Println(string(r))
 	if e != nil {
-		log.Println(e)
+		log.Fatal(e)
 	}
 	return e
 }
