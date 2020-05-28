@@ -1,0 +1,14 @@
+[elastic]
+uri=""
+skipTLS=true
+username=""
+password=""
+
+[server]
+port=8083
+
+[videostore]
+uri="https://github.com/SaiprasadKrishnamurthy/sample_video_files/raw/master/%s.mp4"
+
+[resultsstore]
+directory="./results"
