@@ -45,7 +45,7 @@ func APIVersion() string {
 
 // GetVideoQuestionsURL gets the url.
 func GetVideoQuestionsURL() string {
-	return ""
+	return configuration.VideoStore.URI
 }
 
 // GetConfig get configuration object.
