@@ -92,6 +92,8 @@ paths:
       summary: SaveQuestionMetadata saves question metadata.
   /question/{questionId}:
     get:
+      consumes:
+      - video/mp4
       description: Get Question video by question id.
       parameters:
       - description: question id

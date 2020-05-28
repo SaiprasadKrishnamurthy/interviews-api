@@ -65,6 +65,9 @@ var doc = `{
         "/question/{questionId}": {
             "get": {
                 "description": "Get Question video by question id.",
+                "consumes": [
+                    "video/mp4"
+                ],
                 "produces": [
                     "application/json"
                 ],

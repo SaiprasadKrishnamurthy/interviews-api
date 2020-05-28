@@ -50,8 +50,11 @@
         "/question/{questionId}": {
             "get": {
                 "description": "Get Question video by question id.",
-                "produces": [
+                "consumes": [
                     "application/json"
+                ],
+                "produces": [
+                    "video/mp4"
                 ],
                 "summary": "Get Question video by question id.",
                 "parameters": [

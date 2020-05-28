@@ -41,7 +41,8 @@ func (c *QuestionsController) Questions(rw http.ResponseWriter, r *http.Request,
 // Questions.
 // @Summary Get Question video by question id.
 // @Description Get Question video by question id.
-// @Produce  json
+// @Produce  video/mp4
+// @Accept json
 // @Param questionId path string true "question id"
 // @Success 200
 // @Header 200 {string} Token "qwerty"
