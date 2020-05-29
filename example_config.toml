@@ -11,6 +11,11 @@ port=8083
 
 [videostore]
 uri="https://github.com/SaiprasadKrishnamurthy/sample_video_files/raw/master/%s.mp4"
+workDir="./videos"
 
-[resultsstore]
-directory="./results"
+[nats]
+url="nats://127.0.0.1:4222"
+answersReceivedSubject="answersReceived"
+
+[transcoding]
+timeoutInSeconds=5

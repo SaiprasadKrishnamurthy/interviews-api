@@ -7,11 +7,13 @@ import (
 	"os"
 	"time"
 
+	"github.com/nats-io/nats.go"
 	"github.com/spf13/viper"
 )
 
 var tokens []string
 var configuration Configuration
+var nc *nats.Conn
 
 // InitConfigs initializes all the necessary configs once.
 func InitConfigs() {
@@ -30,6 +32,7 @@ func InitConfigs() {
 	if err != nil {
 		log.Fatalf("unable to decode into struct, %v", err)
 	}
+	initNats()
 
 }
 
@@ -61,4 +64,17 @@ func ElasticClient() *http.Client {
 	return &http.Client{
 		Timeout: time.Second * 10,
 	}
+}
+
+func initNats() {
+	if configuration.Nats.URL == "" {
+		nc, _ = nats.Connect(nats.DefaultURL)
+	} else {
+		nc, _ = nats.Connect(configuration.Nats.URL)
+	}
+}
+
+// GetNatsConnection gets the live nats connection.
+func GetNatsConnection() *nats.Conn {
+	return nc
 }

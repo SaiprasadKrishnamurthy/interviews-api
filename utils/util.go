@@ -1,6 +1,10 @@
 package utils
 
-import "time"
+import (
+	"time"
+
+	"github.com/saiprasadkrishnamurthy/interviews-api/models"
+)
 
 // Unique returns unique elements in a slice.
 func Unique(slice []string) []string {
@@ -15,12 +19,12 @@ func Unique(slice []string) []string {
 	return list
 }
 
-// ExtractResult extracts result from a channel with a max timeout in seconds.
-func ExtractResult(c chan map[string]interface{}, timeoutSeconds int) map[string]interface{} {
+// ExtractTranscodingResult extracts result from a channel with a max timeout in seconds.
+func ExtractTranscodingResult(c chan models.TranscodingResult, timeoutSeconds int) models.TranscodingResult {
 	select {
 	case res := <-c:
 		return res
 	case <-time.After(time.Duration(timeoutSeconds) * time.Second):
-		return map[string]interface{}{}
+		return models.TranscodingResult{Result: "TimeoutError"}
 	}
 }

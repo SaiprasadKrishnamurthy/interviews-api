@@ -10,5 +10,6 @@ require (
 	github.com/spf13/viper v1.7.0
 	github.com/swaggo/swag v1.6.6
 	github.com/urfave/negroni v1.0.0
+	github.com/xfrr/goffmpeg v0.0.0-20200403115021-c3a1545b29f4
 	google.golang.org/protobuf v1.24.0 // indirect
 )

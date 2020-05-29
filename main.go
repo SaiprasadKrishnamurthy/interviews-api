@@ -9,6 +9,7 @@ import (
 	"os/signal"
 	"time"
 
+	"github.com/saiprasadkrishnamurthy/interviews-api/listeners"
 	"github.com/saiprasadkrishnamurthy/interviews-api/routes"
 	"github.com/urfave/negroni"
 
@@ -22,7 +23,7 @@ func init() {
 	r = httprouter.New()
 	config.InitConfigs()
 	routes.InitialiseAllRoutes(r)
-
+	listeners.InitializeAllListeners(config.GetNatsConnection())
 }
 
 // @title Interviews API written in Golang

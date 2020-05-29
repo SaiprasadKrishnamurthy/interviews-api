@@ -70,6 +70,75 @@ info:
   title: Interviews API written in Golang
   version: "1.0"
 paths:
+  /answer-video/{candidateId}/{sessionId}/{questionId}:
+    put:
+      consumes:
+      - multipart/form-data
+      description: SaveAnswerVideo.
+      parameters:
+      - description: this is a test file
+        in: formData
+        name: file
+        required: true
+        type: file
+      - description: Candidate id
+        in: path
+        name: candidateId
+        required: true
+        type: string
+      - description: Session id
+        in: path
+        name: sessionId
+        required: true
+        type: string
+      - description: Question id
+        in: path
+        name: questionId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              description: qwerty
+              type: string
+          schema:
+            $ref: '#/definitions/models.Session'
+        "400": {}
+        "404": {}
+        "500": {}
+      summary: SaveAnswerVideo.
+  /interview-completion/{candidateId}/{sessionId}:
+    post:
+      consumes:
+      - application/json
+      description: called when the interview is completed.
+      parameters:
+      - description: Candidate id
+        in: path
+        name: candidateId
+        required: true
+        type: string
+      - description: Session id
+        in: path
+        name: sessionId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          headers:
+            Token:
+              description: qwerty
+              type: string
+        "400": {}
+        "404": {}
+        "500": {}
+      summary: InterviewCompleted.
   /question:
     put:
       consumes:
@@ -93,7 +162,7 @@ paths:
   /question/{questionId}:
     get:
       consumes:
-      - video/mp4
+      - application/json
       description: Get Question video by question id.
       parameters:
       - description: question id
@@ -102,7 +171,7 @@ paths:
         required: true
         type: string
       produces:
-      - application/json
+      - video/mp4
       responses:
         "200":
           headers:

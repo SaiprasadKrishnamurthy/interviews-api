@@ -30,6 +30,7 @@ func InitialiseAllRoutes(r *httprouter.Router) {
 	// List all your controllers here.
 	questionsController(apiContext, r, appController)
 	sessionController(apiContext, r, appController)
+	answerController(apiContext, r, appController)
 }
 
 func questionsController(apiContext string, r *httprouter.Router, baseController controllers.BaseController) {
@@ -43,4 +44,10 @@ func sessionController(apiContext string, r *httprouter.Router, baseController c
 	c := &controllers.SessionController{BaseController: baseController}
 	r.GET(apiContext+"/session/:sessionId", c.Action(c.Session))
 	r.PUT(apiContext+"/session", c.Action(c.CreateInterviewSession))
+}
+
+func answerController(apiContext string, r *httprouter.Router, baseController controllers.BaseController) {
+	c := &controllers.AnswerController{BaseController: baseController}
+	r.PUT(apiContext+"/answer-video/:candidateId/:sessionId/:questionId", c.Action(c.SaveAnswerVideo))
+	r.POST(apiContext+"/interview-completion/:candidateId/:sessionId", c.Action(c.InterviewCompleted))
 }

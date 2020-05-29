@@ -2,9 +2,11 @@ package config
 
 // Configuration config object
 type Configuration struct {
-	Elastic    ElasticConfiguration
-	Server     ServerConfiguration
-	VideoStore VideoStoreConfiguration
+	Elastic     ElasticConfiguration
+	Server      ServerConfiguration
+	VideoStore  VideoStoreConfiguration
+	Nats        NatsConfiguration
+	Transcoding TranscodingConfiguration
 }
 
 // ElasticConfiguration elastic config object
@@ -17,6 +19,12 @@ type ElasticConfiguration struct {
 	SessionIndex           string
 }
 
+// NatsConfiguration  config object
+type NatsConfiguration struct {
+	URL                    string
+	AnswersReceivedSubject string
+}
+
 // ServerConfiguration  config object
 type ServerConfiguration struct {
 	Port string
@@ -24,5 +32,11 @@ type ServerConfiguration struct {
 
 // VideoStoreConfiguration  config object
 type VideoStoreConfiguration struct {
-	URI string
+	URI     string
+	WorkDir string
+}
+
+// TranscodingConfiguration  config object
+type TranscodingConfiguration struct {
+	TimeoutInSeconds int
 }

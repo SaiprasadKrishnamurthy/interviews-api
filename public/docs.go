@@ -33,6 +33,106 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/answer-video/{candidateId}/{sessionId}/{questionId}": {
+            "put": {
+                "description": "SaveAnswerVideo.",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "SaveAnswerVideo.",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "this is a test file",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Candidate id",
+                        "name": "candidateId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Session id",
+                        "name": "sessionId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Question id",
+                        "name": "questionId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Session"
+                        },
+                        "headers": {
+                            "Token": {
+                                "type": "string",
+                                "description": "qwerty"
+                            }
+                        }
+                    },
+                    "400": {},
+                    "404": {},
+                    "500": {}
+                }
+            }
+        },
+        "/interview-completion/{candidateId}/{sessionId}": {
+            "post": {
+                "description": "called when the interview is completed.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "InterviewCompleted.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Candidate id",
+                        "name": "candidateId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Session id",
+                        "name": "sessionId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "headers": {
+                            "Token": {
+                                "type": "string",
+                                "description": "qwerty"
+                            }
+                        }
+                    },
+                    "400": {},
+                    "404": {},
+                    "500": {}
+                }
+            }
+        },
         "/question": {
             "put": {
                 "description": "SaveQuestionMetadata saves question metadata.",
@@ -66,10 +166,10 @@ var doc = `{
             "get": {
                 "description": "Get Question video by question id.",
                 "consumes": [
-                    "video/mp4"
+                    "application/json"
                 ],
                 "produces": [
-                    "application/json"
+                    "video/mp4"
                 ],
                 "summary": "Get Question video by question id.",
                 "parameters": [
