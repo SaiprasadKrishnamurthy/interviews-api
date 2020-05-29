@@ -15,7 +15,7 @@ workDir="./videos"
 
 [nats]
 url="nats://127.0.0.1:4222"
-answersReceivedSubject="answersReceived"
+interviewCompletedSubject="interviewCompleted"
 
 [transcoding]
 timeoutInSeconds=5

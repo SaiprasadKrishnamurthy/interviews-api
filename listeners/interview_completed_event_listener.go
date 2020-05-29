@@ -40,10 +40,25 @@ func (l *InterviewCompletedReceivedEventListener) Handle(msg *nats.Msg) {
 		}
 	}
 
+	transcodingResults := []models.TranscodingResult{}
 	for _, c := range chans {
 		transcodingResult := utils.ExtractTranscodingResult(c, config.GetConfig().Transcoding.TimeoutInSeconds)
 		fmt.Printf("%+v", transcodingResult)
+		transcodingResults = append(transcodingResults, transcodingResult)
 	}
+	natsConn := config.GetNatsConnection()
+	natsSubject := config.GetConfig().Nats.TranscodingCompletedSubject
+	transcodingCompletedEvent := models.TranscodingCompletedEvent{
+		SessionID:          event.SessionID,
+		CandidateID:        event.CandidateID,
+		TranscodingResults: transcodingResults,
+	}
+	doc, _ := json.Marshal(transcodingCompletedEvent)
+	err := natsConn.Publish(natsSubject, doc)
+	if err != nil {
+		log.Println(err)
+	}
+	log.Printf("Published message %s on subject %s ", doc, natsSubject)
 }
 
 func transcodeToAudio(event *models.InterviewCompletedEvent, inputPath string, outputPath string, c chan models.TranscodingResult) {

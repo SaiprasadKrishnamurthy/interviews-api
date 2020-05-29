@@ -21,8 +21,9 @@ type ElasticConfiguration struct {
 
 // NatsConfiguration  config object
 type NatsConfiguration struct {
-	URL                    string
-	AnswersReceivedSubject string
+	URL                         string
+	InterviewCompletedSubject   string
+	TranscodingCompletedSubject string
 }
 
 // ServerConfiguration  config object

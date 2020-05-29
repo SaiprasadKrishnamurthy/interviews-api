@@ -19,14 +19,21 @@ func (l *BaseListener) OnMessage(subject string, queue string, msgHandler nats.M
 func InitializeAllListeners(nats *nats.Conn) {
 	baseListener := &BaseListener{NatsConn: config.GetNatsConnection()}
 	initializeInterviewCompletedReceivedEventListener(baseListener)
-
+	initializeTranscodingCompletedReceivedEventListener(baseListener)
 	// List all your listeners here.
 
 }
 
 func initializeInterviewCompletedReceivedEventListener(baseListener *BaseListener) {
 	l := &InterviewCompletedReceivedEventListener{BaseListener: baseListener}
-	natsSubject := config.GetConfig().Nats.AnswersReceivedSubject
+	natsSubject := config.GetConfig().Nats.InterviewCompletedSubject
+	natsQueue := "queue_for_" + natsSubject
+	l.OnMessage(natsSubject, natsQueue, l.Handle)
+}
+
+func initializeTranscodingCompletedReceivedEventListener(baseListener *BaseListener) {
+	l := &TranscodingCompletedReceivedEventListener{BaseListener: baseListener}
+	natsSubject := config.GetConfig().Nats.TranscodingCompletedSubject
 	natsQueue := "queue_for_" + natsSubject
 	l.OnMessage(natsSubject, natsQueue, l.Handle)
 }

@@ -74,7 +74,7 @@ func (c *AnswerController) InterviewCompleted(rw http.ResponseWriter, r *http.Re
 	interviewCompletedEvent := models.InterviewCompletedEvent{SessionID: sessionID, CandidateID: candidateID}
 	json, _ := json.Marshal(interviewCompletedEvent)
 	natsConn := config.GetNatsConnection()
-	natsSubject := config.GetConfig().Nats.AnswersReceivedSubject
+	natsSubject := config.GetConfig().Nats.InterviewCompletedSubject
 	err := natsConn.Publish(natsSubject, json)
 	if err != nil {
 		log.Println(err)
