@@ -16,6 +16,14 @@ workDir="./videos"
 [nats]
 url="nats://127.0.0.1:4222"
 interviewCompletedSubject="interviewCompleted"
+transcodingCompletedSubject="transcodingCompleted"
+transcriptionCompletedSubject="transcriptionCompleted"
 
 [transcoding]
 timeoutInSeconds=5
+
+[transcription]
+googleApplicationCredentials="google_transcription.json"
+language="en-IN"
+sampleRateHertz=16000
+timeoutInSeconds=30

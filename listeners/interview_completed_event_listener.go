@@ -34,9 +34,10 @@ func (l *InterviewCompletedReceivedEventListener) Handle(msg *nats.Msg) {
 		if dir.IsDir() {
 			c := make(chan models.TranscodingResult)
 			chans = append(chans, c)
+			baseDir := filepath.Join(inputDir, dir.Name())
 			inputPath := filepath.Join(inputDir, dir.Name(), "answer.webm")
 			outputPath := filepath.Join(inputDir, dir.Name(), "answer.mp3")
-			go transcodeToAudio(&event, inputPath, outputPath, c)
+			go transcodeToAudio(event, baseDir, inputPath, outputPath, c)
 		}
 	}
 
@@ -61,7 +62,7 @@ func (l *InterviewCompletedReceivedEventListener) Handle(msg *nats.Msg) {
 	log.Printf("Published message %s on subject %s ", doc, natsSubject)
 }
 
-func transcodeToAudio(event *models.InterviewCompletedEvent, inputPath string, outputPath string, c chan models.TranscodingResult) {
+func transcodeToAudio(event models.InterviewCompletedEvent, baseDir string, inputPath string, outputPath string, c chan models.TranscodingResult) {
 	fmt.Println(" Input Path: ", inputPath)
 	// Create new instance of transcoder
 	trans := new(transcoder.Transcoder)
@@ -78,10 +79,11 @@ func transcodeToAudio(event *models.InterviewCompletedEvent, inputPath string, o
 	// Start transcoder process without checking progress
 	done := trans.Run(false)
 
-	lastIndexOfSlash := strings.Index(outputPath, "/") + 1
-	runes := []rune(outputPath)
+	lastIndexOfSlash := strings.LastIndex(baseDir, "/") + 1
+	runes := []rune(baseDir)
+	fmt.Println(" Runes: ", runes)
 	question := string(runes[lastIndexOfSlash:])
-
+	fmt.Println(" Question: ", question)
 	// This channel is used to wait for the process to end
 	result := "Success"
 	if err := <-done; err != nil {

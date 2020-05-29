@@ -2,11 +2,12 @@ package config
 
 // Configuration config object
 type Configuration struct {
-	Elastic     ElasticConfiguration
-	Server      ServerConfiguration
-	VideoStore  VideoStoreConfiguration
-	Nats        NatsConfiguration
-	Transcoding TranscodingConfiguration
+	Elastic       ElasticConfiguration
+	Server        ServerConfiguration
+	VideoStore    VideoStoreConfiguration
+	Nats          NatsConfiguration
+	Transcoding   TranscodingConfiguration
+	Transcription TranscriptionConfiguration
 }
 
 // ElasticConfiguration elastic config object
@@ -21,9 +22,10 @@ type ElasticConfiguration struct {
 
 // NatsConfiguration  config object
 type NatsConfiguration struct {
-	URL                         string
-	InterviewCompletedSubject   string
-	TranscodingCompletedSubject string
+	URL                           string
+	InterviewCompletedSubject     string
+	TranscodingCompletedSubject   string
+	TranscriptionCompletedSubject string
 }
 
 // ServerConfiguration  config object
@@ -40,4 +42,12 @@ type VideoStoreConfiguration struct {
 // TranscodingConfiguration  config object
 type TranscodingConfiguration struct {
 	TimeoutInSeconds int
+}
+
+// TranscriptionConfiguration  config object
+type TranscriptionConfiguration struct {
+	GoogleApplicationCredentials string
+	Language                     string
+	SampleRateHertz              int32
+	TimeoutInSeconds             int
 }

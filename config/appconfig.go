@@ -32,8 +32,10 @@ func InitConfigs() {
 	if err != nil {
 		log.Fatalf("unable to decode into struct, %v", err)
 	}
-	initNats()
 
+	// Set env.
+	os.Setenv("GOOGLE_APPLICATION_CREDENTIALS", configuration.Transcription.GoogleApplicationCredentials)
+	initNats()
 }
 
 // GetPort returns the Web server port.

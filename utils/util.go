@@ -28,3 +28,13 @@ func ExtractTranscodingResult(c chan models.TranscodingResult, timeoutSeconds in
 		return models.TranscodingResult{Result: "TimeoutError"}
 	}
 }
+
+// ExtractTranscriptionResult extracts result from a channel with a max timeout in seconds.
+func ExtractTranscriptionResult(c chan models.TranscriptionResult, timeoutSeconds int) models.TranscriptionResult {
+	select {
+	case res := <-c:
+		return res
+	case <-time.After(time.Duration(timeoutSeconds) * time.Second):
+		return models.TranscriptionResult{Result: "TimeoutError"}
+	}
+}
