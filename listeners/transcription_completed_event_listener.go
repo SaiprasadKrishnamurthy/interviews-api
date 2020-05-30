@@ -45,7 +45,20 @@ func (l *TranscriptionCompletedReceivedEventListener) Handle(msg *nats.Msg) {
 		answerScore := textmatch.Similarity(expectedAnswer, actualAnswer, true)
 		keywordsScore := textmatch.Similarity(expectedKeywords, actualAnswer, true)
 
+		qr := models.QuestionResult{
+			SessionID:                         event.SessionID,
+			CandidateID:                       event.CandidateID,
+			QuestionID:                        tr.Question,
+			AutoAnswerSimilarityScore:         answerScore.CosineSimilarityScore,
+			AutoAnswerAbsoluteMatchingScore:   answerScore.AbsoluteSimilarityScore,
+			AutoKeywordsSimilarityScore:       keywordsScore.CosineSimilarityScore,
+			AutoKeywordsAbsoluteMatchingScore: keywordsScore.AbsoluteSimilarityScore,
+		}
+
 		fmt.Printf(" Candidate: %s, Question: %s, Answer Score: %#v, Keyword Score: %#v \n\n\n", event.CandidateID, tr.Question, answerScore, keywordsScore)
+
+		// Async save.
+		go repositories.SaveQuestionResult(&qr)
 
 	}
 

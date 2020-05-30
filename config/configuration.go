@@ -18,6 +18,7 @@ type ElasticConfiguration struct {
 	Password               string
 	QuestionsMetadataIndex string
 	SessionIndex           string
+	QuestionResultIndex    string
 }
 
 // NatsConfiguration  config object

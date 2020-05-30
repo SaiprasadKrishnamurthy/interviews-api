@@ -5,6 +5,7 @@ username=""
 password=""
 questionsMetadataIndex=""
 sessionIndex=""
+questionResultIndex=""
 
 [server]
 port=8083
