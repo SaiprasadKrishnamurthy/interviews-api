@@ -38,3 +38,14 @@ func ExtractTranscriptionResult(c chan models.TranscriptionResult, timeoutSecond
 		return models.TranscriptionResult{Result: "TimeoutError"}
 	}
 }
+
+// Filter questions by value supplied by a mapper function m from a slice.
+func Filter(vs []models.QuestionMetadata, m func(models.QuestionMetadata) string, f func(string) bool) []models.QuestionMetadata {
+	vsf := make([]models.QuestionMetadata, 0)
+	for _, v := range vs {
+		if f(m(v)) {
+			vsf = append(vsf, v)
+		}
+	}
+	return vsf
+}

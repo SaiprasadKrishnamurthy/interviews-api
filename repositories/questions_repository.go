@@ -14,7 +14,7 @@ import (
 )
 
 // GetQuestions get questions.
-func GetQuestions(sessionID string) models.Questions {
+func GetQuestions(sessionID string) (models.Questions, []models.QuestionMetadata) {
 	client := config.ElasticClient()
 	configuration := config.GetConfig()
 	elasticConf := configuration.Elastic
@@ -54,6 +54,7 @@ func GetQuestions(sessionID string) models.Questions {
 	h := response["hits"].(map[string]interface{})
 	hits := h["hits"].([]interface{})
 	questions := []models.Question{}
+	questionsMetadata := []models.QuestionMetadata{}
 	for _, hit := range hits {
 		obj := hit.(map[string]interface{})
 		src := obj["_source"]
@@ -61,8 +62,9 @@ func GetQuestions(sessionID string) models.Questions {
 		qm := models.QuestionMetadata{}
 		json.Unmarshal(srcJSON, &qm)
 		questions = append(questions, qm.Question)
+		questionsMetadata = append(questionsMetadata, qm)
 	}
-	return models.Questions{Questions: questions}
+	return models.Questions{Questions: questions}, questionsMetadata
 }
 
 // SaveQuestionMetadata get questions.

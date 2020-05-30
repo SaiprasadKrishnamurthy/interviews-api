@@ -31,7 +31,7 @@ type QuestionsController struct {
 // @Router /questions [get]
 func (c *QuestionsController) Questions(rw http.ResponseWriter, r *http.Request, p httprouter.Params) error {
 	sessionID := r.URL.Query().Get("sessionId")
-	questions := repositories.GetQuestions(sessionID)
+	questions, _ := repositories.GetQuestions(sessionID)
 	rw.Header().Set("Content-Type", "application/json")
 	questions.ToJSON(rw)
 	return nil // no error
