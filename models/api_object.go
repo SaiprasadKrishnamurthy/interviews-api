@@ -1,7 +1,6 @@
 package models
 
 import (
-	"bufio"
 	"encoding/json"
 	"io"
 )
@@ -19,6 +18,6 @@ func (a *APIObject) ToJSON(obj interface{}, w io.Writer) error {
 
 // FromJSON converts to object from json.
 func (a *APIObject) FromJSON(obj interface{}, r io.Reader) error {
-	d := json.NewDecoder(bufio.NewReader(r))
+	d := json.NewDecoder(r)
 	return d.Decode(&obj)
 }

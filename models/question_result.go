@@ -15,6 +15,7 @@ type QuestionResult struct {
 	AutoKeywordsSimilarityScore       float64 `json:"autoKeywordsSimilarityScore"`
 	AutoKeywordsAbsoluteMatchingScore float64 `json:"autoKeywordsAbsoluteMatchingScore"`
 	ManualScore                       float64 `json:"manualScore"`
+	Confidence                        float32 `json:"confidence"`
 }
 
 // ToJSON - encodes the object to JSON

@@ -89,9 +89,11 @@ func transcript(c chan models.TranscriptionResult, result models.TranscodingResu
 
 	// Prints the results.
 	text := ""
+	var confidence float32
 	for _, result := range resp.Results {
 		for _, alt := range result.Alternatives {
 			text += alt.Transcript + " "
+			confidence = alt.Confidence
 		}
 	}
 	textFile := filepath.Join(inputDir, "answer.txt")
@@ -105,6 +107,7 @@ func transcript(c chan models.TranscriptionResult, result models.TranscodingResu
 		CandidateID: result.CandidateID,
 		Question:    result.Question,
 		Result:      failure,
+		Confidence:  confidence,
 	}
 	c <- tr
 }

@@ -2,8 +2,9 @@ package models
 
 // TranscriptionResult struct.
 type TranscriptionResult struct {
-	SessionID   string `json:"sessionId"`
-	CandidateID string `json:"candidateId"`
-	Question    string `json:"question"`
-	Result      string `json:"result"`
+	SessionID   string  `json:"sessionId"`
+	CandidateID string  `json:"candidateId"`
+	Question    string  `json:"question"`
+	Result      string  `json:"result"`
+	Confidence  float32 `json:"confidence"`
 }

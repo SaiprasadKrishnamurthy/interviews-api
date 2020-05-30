@@ -50,9 +50,10 @@ func (c *SessionController) Session(rw http.ResponseWriter, r *http.Request, p h
 // @Failure 500
 // @Router /session [put]
 func (c *SessionController) CreateInterviewSession(rw http.ResponseWriter, r *http.Request, p httprouter.Params) error {
+	session := models.Session{}
+	session.FromJSON(r.Body)
+
 	go func() {
-		session := models.Session{}
-		session.FromJSON(r.Body)
 		repositories.CreateSession(&session)
 	}()
 	rw.WriteHeader(http.StatusAccepted)

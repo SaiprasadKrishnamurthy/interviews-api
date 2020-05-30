@@ -79,18 +79,9 @@ PUT _template/questionresult_index_template
     "_doc": {
       "dynamic_templates": [
         {
-          "strings": {
-            "match_mapping_type": "string",
-            "unmatch": "*Id",
-            "mapping": {
-              "type": "text"
-            }
-          }
-        },
-        {
           "text": {
             "match_mapping_type": "string",
-            "match": "*Id",
+            "match": "*",
             "mapping": {
               "type": "keyword"
             }

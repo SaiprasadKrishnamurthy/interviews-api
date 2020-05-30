@@ -74,9 +74,10 @@ func (c *QuestionsController) QuestionVideo(rw http.ResponseWriter, r *http.Requ
 // @Failure 500
 // @Router /question [put]
 func (c *QuestionsController) SaveQuestionMetadata(rw http.ResponseWriter, r *http.Request, p httprouter.Params) error {
+	questionMetadata := models.QuestionMetadata{}
+	questionMetadata.FromJSON(r.Body)
 	go func() {
-		questionMetadata := models.QuestionMetadata{}
-		questionMetadata.FromJSON(r.Body)
+		fmt.Printf("%#v\n", questionMetadata)
 		repositories.SaveQuestionMetadata(&questionMetadata)
 	}()
 	rw.WriteHeader(http.StatusAccepted)

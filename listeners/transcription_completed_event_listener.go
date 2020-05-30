@@ -53,6 +53,7 @@ func (l *TranscriptionCompletedReceivedEventListener) Handle(msg *nats.Msg) {
 			AutoAnswerAbsoluteMatchingScore:   answerScore.AbsoluteSimilarityScore,
 			AutoKeywordsSimilarityScore:       keywordsScore.CosineSimilarityScore,
 			AutoKeywordsAbsoluteMatchingScore: keywordsScore.AbsoluteSimilarityScore,
+			Confidence:                        tr.Confidence,
 		}
 
 		fmt.Printf(" Candidate: %s, Question: %s, Answer Score: %#v, Keyword Score: %#v \n\n\n", event.CandidateID, tr.Question, answerScore, keywordsScore)
